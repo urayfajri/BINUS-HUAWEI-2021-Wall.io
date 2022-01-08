@@ -52,6 +52,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="3dp"
+        tools:listitem="@layout/category_wallpaper_item"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
 
@@ -61,6 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        tools:listitem="@layout/wallpaper_item"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
 
