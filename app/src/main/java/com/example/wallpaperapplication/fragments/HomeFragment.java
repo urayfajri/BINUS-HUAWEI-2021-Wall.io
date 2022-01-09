@@ -99,9 +99,13 @@ public class HomeFragment extends Fragment implements WallpaperCategoryClickable
     }
 
     private void getWallpaperCategories() {
-        wallpaperCategories.add(new WallpaperCategory("technology","https://www.pexels.com/photo/black-flat-screen-computer-monitor-1714208/"));
-        wallpaperCategories.add(new WallpaperCategory("programming","https://www.pexels.com/photo/text-2061168/"));
-        wallpaperCategories.add(new WallpaperCategory("nature","https://www.pexels.com/photo/person-walking-between-green-forest-trees-15286/"));
+        wallpaperCategories.add(new WallpaperCategory("Technology","https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"));
+        wallpaperCategories.add(new WallpaperCategory("Programming","https://images.pexels.com/photos/2061168/pexels-photo-2061168.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"));
+        wallpaperCategories.add(new WallpaperCategory("Nature","https://images.pexels.com/photos/15286/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"));
+        wallpaperCategories.add(new WallpaperCategory("Travel","https://images.pexels.com/photos/46148/aircraft-jet-landing-cloud-46148.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"));
+        wallpaperCategories.add(new WallpaperCategory("Architecture","https://images.pexels.com/photos/137594/pexels-photo-137594.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"));
+        wallpaperCategories.add(new WallpaperCategory("Arts","https://images.pexels.com/photos/1918290/pexels-photo-1918290.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"));
+        wallpaperCategories.add(new WallpaperCategory("Music","https://images.pexels.com/photos/1389429/pexels-photo-1389429.jpeg?auto=compress&cs=tinysrgb&w=500&dpr=1"));
         wallpaperCategoryAdapter.notifyDataSetChanged();
     }
 
