@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="20dp"
-            android:text="Application version" />
+            android:text="Application Version" />
 
         <TextView
             android:id="@+id/tvVersion"
