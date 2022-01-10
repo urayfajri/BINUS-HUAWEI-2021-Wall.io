@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -36,6 +37,7 @@ public class FavoriteFragment extends Fragment {
     private ProgressBar pbLoading;
     private ArrayList<String> wallpapers;
     private WallpaperAdapter wallpaperFavoriteAdapter;
+    TextView tvEmpty;
     private View view;
 
     @Nullable
@@ -49,6 +51,7 @@ public class FavoriteFragment extends Fragment {
 
         rvFavWallpapers = view.findViewById(R.id.rvWallpapers);
         pbLoading = view.findViewById(R.id.pbLoading);
+        tvEmpty = view.findViewById(R.id.tv_empty);
         wallpapers = new ArrayList<>();
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getContext(), 2);
@@ -56,7 +59,7 @@ public class FavoriteFragment extends Fragment {
         wallpaperFavoriteAdapter = new WallpaperAdapter(wallpapers, this.getContext());
         rvFavWallpapers.setAdapter(wallpaperFavoriteAdapter);
 
-        getFavoritedWallpapers();
+        setView();
 
         return view;
     }
@@ -93,6 +96,19 @@ public class FavoriteFragment extends Fragment {
             }
         };
         requestQueue.add(jsonObjectRequest);
+    }
+
+    //temporary
+    private void setView(){
+        getFavoritedWallpapers();
+        if(wallpapers.size() < 1){
+            rvFavWallpapers.setVisibility(View.INVISIBLE);
+            tvEmpty.setVisibility(View.VISIBLE);
+        }
+        else{
+            rvFavWallpapers.setVisibility(View.VISIBLE);
+            tvEmpty.setVisibility(View.INVISIBLE);
+        }
     }
 
 }
