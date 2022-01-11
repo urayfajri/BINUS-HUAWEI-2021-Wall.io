@@ -22,6 +22,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wallpaperapplication.MainActivity;
@@ -114,7 +115,6 @@ public class HomeFragment extends Fragment implements WallpaperCategoryClickable
         pbLoading.setVisibility(View.VISIBLE);
 
         String url = "https://api.pexels.com/v1/curated?per_page=30&page=1";
-
         RequestQueue requestQueue = Volley.newRequestQueue(this.getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 

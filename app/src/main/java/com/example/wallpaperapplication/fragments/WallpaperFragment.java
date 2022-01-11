@@ -1,6 +1,8 @@
 package com.example.wallpaperapplication.fragments;
 
 import android.app.WallpaperManager;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -21,6 +24,9 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.wallpaperapplication.MainActivity;
 import com.example.wallpaperapplication.R;
+import com.example.wallpaperapplication.models.FavoritedWallpaper;
+import com.example.wallpaperapplication.models.User;
+import com.example.wallpaperapplication.session.SharedPreference;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.io.IOException;
@@ -29,6 +35,7 @@ public class WallpaperFragment extends Fragment {
 
     private ImageView ivWallpaper;
     private Button btnSetWallpaper;
+    private ImageButton btnAddToFav;
     private String imgUrl;
     WallpaperManager wallpaperManager;
 
@@ -43,6 +50,7 @@ public class WallpaperFragment extends Fragment {
 
         ivWallpaper = view.findViewById(R.id.ivWallpaper);
         btnSetWallpaper = view.findViewById(R.id.btnSetWallpaper);
+        btnAddToFav = view.findViewById(R.id.btn_add_to_fav);
         imgUrl = getArguments().getString("imgUrl");
 
         // imgUrl = getActivity().getIntent().getStringExtra("imgUrl");
@@ -73,6 +81,20 @@ public class WallpaperFragment extends Fragment {
                     }
                 }).submit();
                 FancyToast.makeText(getActivity(), "Wallpaper set to Home Screen", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show();
+            }
+        });
+
+        btnAddToFav.setOnClickListener(view1 -> {
+            SharedPreference sharedPreference = new SharedPreference(requireContext());
+            User user = sharedPreference.load();
+            FavoritedWallpaper favoritedWallpaper = new FavoritedWallpaper(user.getEmail(), imgUrl);
+
+            //NEED TO BE CHANGED IN isFavorited PARAMETERS TO FIT ACCORDING TO HUAWEI KIT API
+            if(MainActivity.favoriteWallpaperDatabase.favoriteWallpaperDao().isFavorited(user.getEmail(), imgUrl)!=1) {
+                MainActivity.favoriteWallpaperDatabase.favoriteWallpaperDao().addFavorite(favoritedWallpaper);
+                Toast.makeText(requireContext(),"Added to favorite", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(requireContext(),"This wallpaper is already favorited!", Toast.LENGTH_SHORT).show();
             }
         });
 

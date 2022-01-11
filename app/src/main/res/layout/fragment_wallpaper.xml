@@ -11,8 +11,7 @@
         android:id="@+id/ivWallpaper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        />
+        android:scaleType="centerCrop" />
 
     <Button
         android:id="@+id/btnSetWallpaper"
@@ -27,6 +26,17 @@
         android:textSize="15sp"
         android:backgroundTint="@color/black_shade_2"
         />
+
+    <ImageButton
+        android:id="@+id/btn_add_to_fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/add_to_favorites"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="12dp"
+        android:src="@drawable/ic_round_star_add_fav_24"
+        android:background="@null" />
 
 
 </RelativeLayout>

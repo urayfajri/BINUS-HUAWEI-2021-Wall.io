@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.wallpaperapplication.MainActivity;
 import com.example.wallpaperapplication.R;
+import com.example.wallpaperapplication.adapters.FavoriteWallpaperAdapter;
 import com.example.wallpaperapplication.adapters.WallpaperAdapter;
+import com.example.wallpaperapplication.models.FavoritedWallpaper;
+import com.example.wallpaperapplication.models.User;
+import com.example.wallpaperapplication.session.SharedPreference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,10 +41,11 @@ public class FavoriteFragment extends Fragment {
 
     private RecyclerView rvFavWallpapers;
     private ProgressBar pbLoading;
-    private ArrayList<String> wallpapers;
-    private WallpaperAdapter wallpaperFavoriteAdapter;
+    private ArrayList<FavoritedWallpaper> wallpapers;
+    private FavoriteWallpaperAdapter wallpaperFavoriteAdapter;
     TextView tvEmpty;
     private View view;
+    private User loggedInUser;
 
     @Nullable
     @Override
@@ -54,13 +61,15 @@ public class FavoriteFragment extends Fragment {
         tvEmpty = view.findViewById(R.id.tv_empty);
         wallpapers = new ArrayList<>();
 
+        SharedPreference sharedPreference = new SharedPreference(requireContext());
+        loggedInUser = sharedPreference.load();
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getContext(), 2);
         rvFavWallpapers.setLayoutManager(gridLayoutManager);
-        wallpaperFavoriteAdapter = new WallpaperAdapter(wallpapers, this.getContext());
+        wallpaperFavoriteAdapter = new FavoriteWallpaperAdapter(loggedInUser,wallpapers, this.getContext());
         rvFavWallpapers.setAdapter(wallpaperFavoriteAdapter);
 
         setView();
-
         return view;
     }
 
@@ -70,35 +79,11 @@ public class FavoriteFragment extends Fragment {
         wallpapers.clear();
         pbLoading.setVisibility(View.VISIBLE);
 
-        String url = "https://api.pexels.com/v1/curated?per_page=30&page=1";
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this.getContext());
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, response -> {
-            pbLoading.setVisibility(View.GONE);
-            try {
-                JSONArray photoArray = response.getJSONArray("photos");
-                for (int i=0; i<photoArray.length();i++) {
-                    JSONObject photoObj = photoArray.getJSONObject(i);
-                    String imgUrl = photoObj.getJSONObject("src").getString("portrait");
-                    wallpapers.add(imgUrl);
-                }
-                wallpaperFavoriteAdapter.notifyDataSetChanged();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }, error -> Toast.makeText(getActivity(), "Fail to load wallpapers..", Toast.LENGTH_SHORT).show()) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<>();
-                headers.put("Authorization","563492ad6f9170000100000107cbb7a5027f44f6b19b66d0fdc4ccb2");
-
-                return headers;
-            }
-        };
-        requestQueue.add(jsonObjectRequest);
+        wallpapers.addAll(MainActivity.favoriteWallpaperDatabase.favoriteWallpaperDao().getUserFavoritedData(loggedInUser.getEmail()));
+        wallpaperFavoriteAdapter.notifyDataSetChanged();
+        pbLoading.setVisibility(View.GONE);
     }
 
-    //temporary
     private void setView(){
         getFavoritedWallpapers();
         if(wallpapers.size() < 1){
