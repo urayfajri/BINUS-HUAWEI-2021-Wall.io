@@ -38,13 +38,14 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
 
     @Override
     public void onBindViewHolder(@NonNull WallpaperAdapter.WallpaperViewHolder holder, int position) {
-        Glide.with(context).load(wallpapers.get(position)).into(holder.ivWallpaper);
+        String wallpaper = wallpapers.get(position);
+        Glide.with(context).load(wallpaper).into(holder.ivWallpaper);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 FragmentManager fm = ((AppCompatActivity)context).getSupportFragmentManager();
-                fm.beginTransaction().replace(R.id.fragment_container, (Fragment)new WallpaperFragment().newInstance(wallpapers.get(position))).addToBackStack(null).commit();
+                fm.beginTransaction().replace(R.id.fragment_container, (Fragment)new WallpaperFragment().newInstance(wallpaper)).addToBackStack(null).commit();
 
             }
         });

@@ -10,14 +10,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wallpaperapplication.adapters.WallpaperAdapter;
 import com.example.wallpaperapplication.adapters.WallpaperCategoryAdapter;
+import com.example.wallpaperapplication.database.FavoriteWallpaperDatabase;
 import com.example.wallpaperapplication.fragments.AboutFragment;
 import com.example.wallpaperapplication.fragments.FavoriteFragment;
 import com.example.wallpaperapplication.fragments.HelpFragment;
@@ -56,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
+    public static FavoriteWallpaperDatabase favoriteWallpaperDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         User user = sharedPreference.load();
         navEmail.setText(user.getEmail());
 
+        favoriteWallpaperDatabase = Room.databaseBuilder(getApplicationContext(), FavoriteWallpaperDatabase.class, "wallpaperFavDB")
+                                    .allowMainThreadQueries().build();
     }
 
     private boolean loadFragment(Fragment fragment){

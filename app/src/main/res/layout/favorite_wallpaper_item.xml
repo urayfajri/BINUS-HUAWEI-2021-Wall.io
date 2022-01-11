@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="8dp"
+    >
+
+    <ImageView
+        android:id="@+id/ivWallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@color/purple_200"
+        />
+    
+    <ImageButton
+        android:id="@+id/img_btn_fav"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/ic_round_star_fav_24"
+        android:layout_margin="8dp"
+        android:layout_gravity="end|bottom"
+        android:contentDescription="@string/remove_favorite" />
+
+</androidx.cardview.widget.CardView>

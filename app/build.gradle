@@ -43,5 +43,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.huawei.hms:hwid:5.0.5.301'
     implementation 'com.huawei.hms:ads-identifier:3.4.34.301'
+    implementation "androidx.room:room-runtime:2.4.0"
+    annotationProcessor "androidx.room:room-compiler:2.4.0"
+    androidTestImplementation "androidx.room:room-testing:2.4.0"
 }
 apply plugin: 'com.huawei.agconnect'

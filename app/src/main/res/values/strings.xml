@@ -28,5 +28,8 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="username_or_email">Username or Email Address</string>
     <string name="by_signing_up">By Signing up, you agree with our Terms &#38; Conditions</string>
+    <string name="favorite_empty">You Have No Favorites Yet.</string>
+    <string name="add_to_favorites">add to favorites</string>
+    <string name="remove_favorite">click to remove favorite</string>
 
 </resources>
