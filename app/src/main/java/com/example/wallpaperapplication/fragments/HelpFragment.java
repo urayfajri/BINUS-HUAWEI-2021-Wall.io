@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.wallpaperapplication.R;
-import com.example.wallpaperapplication.loginregister.LoginActivity;
 import com.example.wallpaperapplication.splashscreen.SplashActivity;
 
 public class HelpFragment extends Fragment {

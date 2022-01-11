@@ -25,7 +25,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/tv_navname"
+        android:id="@+id/tv_navemail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/header_name"
@@ -36,11 +36,10 @@
         />
 
     <TextView
-        android:id="@+id/tv_navemail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/header_email"
-        android:textSize="20dp"
+        android:text="HUAWEI ID"
+        android:textSize="17dp"
         android:textColor="@color/white"
         android:textAlignment="center"
         />

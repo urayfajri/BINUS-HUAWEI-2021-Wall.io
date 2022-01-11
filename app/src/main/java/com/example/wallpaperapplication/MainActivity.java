@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +37,8 @@ import com.example.wallpaperapplication.fragments.HomeFragment;
 import com.example.wallpaperapplication.fragments.LogoutFragment;
 import com.example.wallpaperapplication.fragments.ProfileFragment;
 import com.example.wallpaperapplication.interfaces.WallpaperCategoryClickable;
+import com.example.wallpaperapplication.loginlogout.LoginActivity;
+import com.example.wallpaperapplication.loginlogout.LogoutActivity;
 import com.example.wallpaperapplication.models.User;
 import com.example.wallpaperapplication.models.WallpaperCategory;
 import com.example.wallpaperapplication.session.SharedPreference;
@@ -61,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView;
 
-        TextView navName;
         TextView navEmail;
 
         loadFragment(new HomeFragment());
@@ -71,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
 
         View headerView = navigationView.getHeaderView(0);
-        navName = headerView.findViewById(R.id.tv_navname);
         navEmail = headerView.findViewById(R.id.tv_navemail);
 
         setSupportActionBar(toolbar);
@@ -85,9 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         SharedPreference sharedPreference = new SharedPreference(MainActivity.this);
         User user = sharedPreference.load();
-        navName.setText(user.getName());
         navEmail.setText(user.getEmail());
-
 
     }
 
@@ -106,10 +105,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new HomeFragment()).addToBackStack(null).commit();
                 break;
-            case R.id.nav_my_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ProfileFragment()).addToBackStack(null).commit();
-                break;
             case R.id.nav_my_favorite:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new FavoriteFragment()).addToBackStack(null).commit();
@@ -123,8 +118,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         new HelpFragment()).addToBackStack(null).commit();
                 break;
             case R.id.nav_log_out:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new LogoutFragment()).addToBackStack(null).commit();
+                Intent intent = new Intent(MainActivity.this, LogoutActivity.class);
+                startActivity(intent);
+                finish();
                 break;
 
         }

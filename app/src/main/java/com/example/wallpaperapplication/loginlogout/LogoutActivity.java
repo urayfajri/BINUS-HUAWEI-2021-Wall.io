@@ -1,17 +1,13 @@
-package com.example.wallpaperapplication.loginregister;
+package com.example.wallpaperapplication.loginlogout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.wallpaperapplication.MainActivity;
 import com.example.wallpaperapplication.R;
@@ -26,16 +22,8 @@ import com.huawei.hms.support.account.request.AccountAuthParams;
 import com.huawei.hms.support.account.request.AccountAuthParamsHelper;
 import com.huawei.hms.support.account.result.AuthAccount;
 import com.huawei.hms.support.account.service.AccountAuthService;
-import com.huawei.hms.support.api.entity.common.CommonConstant;
 
-public class LoginActivity extends AppCompatActivity {
-
-    TextView signUp;
-    TextView terms;
-    TextView forgot;
-    EditText email;
-    EditText pass;
-    Button btnLogin;
+public class LogoutActivity extends AppCompatActivity {
 
     // AccountAuthService provides a set of APIs, including silentSignIn, getSignInIntent, and signOut.
     private AccountAuthService mAuthService;
@@ -49,65 +37,38 @@ public class LoginActivity extends AppCompatActivity {
     // Define the log tag.
     private static final String TAG = "Account";
 
+
+    TextView cancel;
+    TextView logout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_logout);
 
-        signUp = findViewById(R.id.sign_up_fragment);
-        terms = findViewById(R.id.tv_terms);
-        forgot = findViewById(R.id.tv_forgot);
-        email = findViewById(R.id.et_email_login);
-        pass = findViewById(R.id.et_password_login);
-        btnLogin = findViewById(R.id.btn_login);
+        cancel = findViewById(R.id.tv_cancel_logout);
+        logout = findViewById(R.id.tv_logout);
 
-        signUp.setOnClickListener(new View.OnClickListener() {
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(LogoutActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String _email = email.getText().toString();
-                String _pass = pass.getText().toString();
-
-                if(email.getText().toString().isEmpty() && pass.getText().toString().isEmpty())
-                {
-                    Toast.makeText(getApplicationContext(),"Email and Password can't be empty", Toast.LENGTH_SHORT).show();
-                }
-                else if(email.getText().toString().isEmpty())
-                {
-                    Toast.makeText(getApplicationContext(), "Email can't be empty", Toast.LENGTH_SHORT).show();
-                }
-                else if(pass.getText().toString().isEmpty())
-                {
-                    Toast.makeText(getApplicationContext(),"Password can't be empty", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    //masih dummy
-                    SharedPreference sharedPreference = new SharedPreference(LoginActivity.this);
-                    sharedPreference.save(new User("User Dummy", _email, _pass));
-
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                signOut();
+//                cancelAuthorization();
+                LogoutActivity.this.getSharedPreferences("sharedPref", Context.MODE_PRIVATE).edit().clear().apply();
+                Intent intent = new Intent(LogoutActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
-
-        findViewById(R.id.HuaweiIdAuthButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                silentSignInByHwId();
-            }
-        });
-
     }
+
 
     private void silentSignInByHwId() {
         // 1. Use AccountAuthParams to specify the user information to be obtained, including the user ID (OpenID and UnionID), email address, and profile (nickname and picture).
@@ -180,4 +141,36 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void signOut() {
+        Task<Void> signOutTask = mAuthService.signOut();
+        signOutTask.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.i(TAG, "signOut Success");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                Log.i(TAG, "signOut fail");
+            }
+        });
+    }
+
+    private void cancelAuthorization() {
+        Task<Void> task = mAuthService.cancelAuthorization();
+        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.i(TAG, "cancelAuthorization success");
+            }
+        });
+        task.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                Log.i(TAG, "cancelAuthorization failure:" + e.getClass().getSimpleName());
+            }
+        });
+    }
+
 }
