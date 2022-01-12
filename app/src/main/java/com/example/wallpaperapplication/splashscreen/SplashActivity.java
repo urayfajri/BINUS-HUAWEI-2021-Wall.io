@@ -97,7 +97,6 @@ public class SplashActivity extends Activity {
     };
 
     private int SPLASH_TIME_OUT = 1500;
-//    private ProgressBar pbLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +105,6 @@ public class SplashActivity extends Activity {
 
         HwAds.init(this);
         loadAd();
-//        pbLoading = findViewById(R.id.pb_loading_splash);
     }
 
     private void loadAd() {
