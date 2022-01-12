@@ -40,8 +40,6 @@ public class HelpFragment extends Fragment {
                 }
                 else{
                     Toast.makeText(view.getContext(), "Successfully Sent", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(view.getContext(), SplashActivity.class);
-                    startActivity(intent);
                 }
             }
         });
