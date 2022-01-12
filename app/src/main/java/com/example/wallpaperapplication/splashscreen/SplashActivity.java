@@ -148,10 +148,10 @@ public class SplashActivity extends Activity {
 
     private int getScreenOrientation() {
         Configuration config = getResources().getConfiguration();
-        if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            return ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-        } else {
+        if (config.orientation == Configuration.ORIENTATION_PORTRAIT) {
             return ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        } else {
+            return ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
         }
     }
 
