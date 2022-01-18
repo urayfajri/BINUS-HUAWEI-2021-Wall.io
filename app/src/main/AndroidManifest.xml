@@ -29,8 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".loginlogout.LoginActivity" />
-        <activity android:name=".loginlogout.LogoutActivity" />
+        <activity android:name=".login.LoginActivity" />
         <activity android:name=".MainActivity" />
 
         <meta-data

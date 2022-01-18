@@ -1,4 +1,4 @@
-package com.example.wallpaperapplication.loginlogout;
+package com.example.wallpaperapplication.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 

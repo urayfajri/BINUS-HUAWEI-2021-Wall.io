@@ -9,7 +9,7 @@ import android.widget.ProgressBar;
 
 import com.example.wallpaperapplication.MainActivity;
 import com.example.wallpaperapplication.R;
-import com.example.wallpaperapplication.loginlogout.LoginActivity;
+import com.example.wallpaperapplication.login.LoginActivity;
 import com.example.wallpaperapplication.models.User;
 import com.example.wallpaperapplication.session.SharedPreference;
 

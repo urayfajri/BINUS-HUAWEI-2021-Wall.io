@@ -14,10 +14,12 @@ import android.widget.TextView;
 
 import com.example.wallpaperapplication.MainActivity;
 import com.example.wallpaperapplication.R;
-import com.example.wallpaperapplication.loginlogout.LoginActivity;
+import com.example.wallpaperapplication.login.LoginActivity;
 import com.huawei.hmf.tasks.OnFailureListener;
 import com.huawei.hmf.tasks.OnSuccessListener;
 import com.huawei.hmf.tasks.Task;
+import com.huawei.hms.support.account.AccountAuthManager;
+import com.huawei.hms.support.account.request.AccountAuthParams;
 import com.huawei.hms.support.account.service.AccountAuthService;
 
 public class LogoutFragment extends Fragment {
@@ -25,8 +27,8 @@ public class LogoutFragment extends Fragment {
     // AccountAuthService provides a set of APIs, including silentSignIn, getSignInIntent, and signOut.
     private AccountAuthService mAuthService;
 
-    // Define the request code for signInIntent.
-    private static final int REQUEST_CODE_SIGN_IN = 1000;
+    // Set HUAWEI ID sign-in authorization parameters.
+    private AccountAuthParams mAuthParam;
 
     // Define the log tag.
     private static final String TAG = "Account";
@@ -57,17 +59,17 @@ public class LogoutFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 signOut();
-                // cancelAuthorization();
+                cancelAuthorization();
                 getActivity().getSharedPreferences("sharedPref", Context.MODE_PRIVATE).edit().clear().apply();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
             }
         });
 
+        mAuthService = AccountAuthManager.getService(getActivity(), mAuthParam);
+
         return view;
     }
-
-
 
     private void signOut() {
         Task<Void> signOutTask = mAuthService.signOut();
